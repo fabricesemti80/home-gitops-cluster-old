@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+# ? icons from : https://materialdesignicons.com/
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
@@ -32,11 +34,27 @@ spec:
         matchNames:
           - default
           - networking
-      name: "you"
+          - media
+          - tools
+          - monitoring
+          - storage
+          - downloads
+          - security
+          - development
+      name: "Fabrice"
       customApps:
-        - name: Some External Cluster Service
-          url: http://192.168.1.100:5000
-          icon: test-tube
+        - name: Plex [local]
+          url: "http://${SVC_PLEX_ADDR}:32400"
+          icon: plex
+        - name: NAS [local]
+          url: http://192.168.1.3
+          icon: nas
+        - name: Home-Assistant [local]
+          url: "http://${SVC_HOME_ASSISTANT_ADDR}:8123"
+          icon: home-assistant
+        - name: EMQX [local]
+          url: "http://${SVC_EMQX_ADDR}:18083"
+          icon: table-network
       groups:
         - name: Communicate
           links:
@@ -107,10 +125,15 @@ spec:
         enabled: true
         ingressClassName: "nginx"
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-staging"
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
-          nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+          external-dns/is-public: "true"
+          nginx.ingress.kubernetes.io/auth-url: "https://oauth.${SECRET_DOMAIN}/oauth2/auth"
+          nginx.ingress.kubernetes.io/auth-signin: "https://oauth.${SECRET_DOMAIN}/oauth2/start?rd=$scheme://$best_http_host$request_uri"
+          nginx.ingress.kubernetes.io/auth-response-headers: "x-auth-request-user, x-auth-request-email, x-auth-request-access-token"
+          # nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,172.16.0.0/12,192.168.0.0/16"
         hosts:
           - host: "hajimari.${SECRET_DOMAIN}"
             paths:

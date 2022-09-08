@@ -16,7 +16,6 @@ resources:
   - stakater.yaml
   - weaveworks-kured.yaml
   - minio-charts.yaml
-  - authelia-charts.yaml
   - fairwinds.yaml
   - cowboysysop.yaml
   - wrmilling-charts.yaml

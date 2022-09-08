@@ -7,3 +7,4 @@ resources:
   - metrics-server
   - reloader
   - kube-vip
+  - oauth2proxy

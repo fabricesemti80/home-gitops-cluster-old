@@ -6,6 +6,9 @@ metadata:
   name: thanos
   namespace: monitoring
 spec:
+  dependsOn:
+    - name: minio
+      namespace: default
   interval: 5m
   chart:
     spec:

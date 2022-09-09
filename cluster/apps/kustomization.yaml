@@ -9,3 +9,4 @@ resources:
   - system-upgrade
   - media
   - storage
+  - monitoring

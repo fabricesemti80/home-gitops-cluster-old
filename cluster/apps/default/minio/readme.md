@@ -115,7 +115,37 @@ mc admin policy set minio postgresql-private user=postgresql
 
 ```
 
+### Velero setup
+
+- create bucket
+
+```sh
+mc mb minio/velero
+```
+
+### Thanos setup
+
+- create bucket
+
+```sh
+mc mb minio/thanos
+```
+
+### Finally...
+
+Confirm the buckets are created
+
+```sh
+sh-4.4# mc ls minio
+[2022-09-09 07:10:54 UTC]     0B postgresql/
+[2022-09-09 07:19:55 UTC]     0B thanos/
+[2022-09-09 07:19:47 UTC]     0B velero/
+sh-4.4#
+```
+
 reference:
+
+- <https://github.com/minio/mc/blob/master/docs/minio-client-complete-guide.md>
 
 - <https://www.stackhero.io/en/services/MinIO/documentations/Getting-started/Use-the-MinIO-CLI>
 

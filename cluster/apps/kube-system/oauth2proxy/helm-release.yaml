@@ -1,4 +1,5 @@
 ---
+# yamllint disable rule:line-length
 # ? https://oauth2-proxy.github.io/oauth2-proxy/docs/configuration/oauth_provider/#keycloak-oidc-auth-provider
 # ? https://www.talkingquickly.co.uk/webapp-authentication-keycloak-OAuth2-proxy-nginx-ingress-kubernetes
 apiVersion: helm.toolkit.fluxcd.io/v2beta1

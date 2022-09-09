@@ -5,6 +5,9 @@ metadata:
   name: postgres
   namespace: default
 spec:
+  dependsOn:
+  - name: minio
+    namespace: default
   interval: 15m
   chart:
     spec:

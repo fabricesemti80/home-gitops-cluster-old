@@ -6,8 +6,8 @@ metadata:
   namespace: default
 spec:
   dependsOn:
-  - name: minio
-    namespace: default
+    - name: minio
+      namespace: default
   interval: 15m
   chart:
     spec:

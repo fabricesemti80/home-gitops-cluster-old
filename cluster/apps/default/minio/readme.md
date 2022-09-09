@@ -5,25 +5,37 @@
 Once the console is up, you can connect to it with the minio console:
 
 ```sh
-
 # start a container with the  cli
 docker run -it --entrypoint=/bin/sh minio/mc
-Unable to find image 'minio/mc:latest' locally
-latest: Pulling from minio/mc
-a96e4e55e78a: Pull complete
-67d8ef478732: Pull complete
-8c1d22ef296f: Pull complete
-9572033e5fbb: Pull complete
-a709e061bbfd: Pull complete
-Digest: sha256:8fdaacaec6655ef5cc15210fa74900f2d46931484ead5215612ad9092e472123
-Status: Downloaded newer image for minio/mc:latest
+
 sh-4.4#
 # note the console changed, as we are in the container ^^
+```
 
-# connect to the minio instance
-sh-4.4# mc alias set minio https://s3.<! your domain!> minio-admin <!your secret key!>
+```sh
+# connect to the minio instance (within the container)
+mc alias set minio https://s3.<! your domain!> minio-admin <!your secret key!>
+
 Added `minio` successfully.
 sh-4.4#
+
+```
+
+```sh
+# test the connection
+mc admin info minio
+
+●  s3.fabricesemti.net
+   Uptime: 27 minutes
+   Version: 2022-08-25T07:17:05Z
+   Network: 1/1 OK
+   Drives: 1/1 OK
+   Pool: 1
+
+Pools:
+   1st, Erasure sets: 1, Disks per erasure set: 1
+
+1 drive online, 0 drives offline
 sh-4.4#
 
 ```
@@ -50,7 +62,60 @@ sh-4.4#
 
 ```
 
-refernce:
+### Postgres setup
+
+- crete the Postgres user
+
+```sh
+mc admin user add minio postgresql <pw from cluster secrets>
+# Added user `postgresql` successfully.
+```
+
+- create bucket
+
+```sh
+mc mb minio/postgresql
+# Bucket created successfully `minio/postgresql`.
+```
+
+- create policy and apply it on the bucket
+
+```sh
+
+cat <<EOF > postgresql-user-policy.json
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Action": [
+                    "s3:ListBucket",
+                    "s3:PutObject",
+                    "s3:GetObject",
+                    "s3:DeleteObject"
+                ],
+                "Effect": "Allow",
+                "Resource": ["arn:aws:s3:::postgresql/*", "arn:aws:s3:::postgresql"],
+                "Sid": ""
+            }
+        ]
+    }
+EOF
+# this saves the policy file
+
+mc admin policy add minio postgresql-private postgresql-user-policy.json
+# Added policy `postgresql-private` successfully.
+# this applies the policy file
+```
+
+- finally, associate the policy with the user
+
+```sh
+mc admin policy set minio postgresql-private user=postgresql
+# Policy `postgresql-private` is set on user `postgresql`
+
+```
+
+reference:
 
 - <https://www.stackhero.io/en/services/MinIO/documentations/Getting-started/Use-the-MinIO-CLI>
 

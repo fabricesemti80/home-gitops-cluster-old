@@ -7,3 +7,5 @@ resources:
   - overseerr
   - plex
   - bazarr
+  - jellyfin
+

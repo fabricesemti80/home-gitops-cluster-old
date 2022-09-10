@@ -46,6 +46,9 @@ spec:
         - name: Plex [local]
           url: "http://${SVC_PLEX_ADDR}:32400"
           icon: plex
+        - name: Jellyfin [local]
+          url: "http://${SVC_JELLYFIN_ADDR}:8096"
+          icon: jellyfish
         - name: NAS [local]
           url: http://192.168.1.3
           icon: nas

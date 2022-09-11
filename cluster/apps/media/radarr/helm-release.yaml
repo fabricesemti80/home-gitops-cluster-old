@@ -9,6 +9,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      replicas: 3
       # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: radarr
       version: 16.3.2

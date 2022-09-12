@@ -26,9 +26,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
 
       - name: MegaLinter
+        id: ml
         uses: oxsecurity/megalinter@v6.8.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"

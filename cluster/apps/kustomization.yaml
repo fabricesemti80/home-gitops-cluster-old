@@ -13,3 +13,4 @@ resources:
   - development
   - downloads
   - security
+  - velero

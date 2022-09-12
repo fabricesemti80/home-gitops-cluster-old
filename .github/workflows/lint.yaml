@@ -30,8 +30,8 @@ jobs:
           fetch-depth: 0 # If you use VALIDATE_ALL_CODEBASE = true, you can remove this line to improve performances
 
       - name: MegaLinter
+        uses: oxsecurity/megalinter@v6.9.1
         id: ml
-        uses: oxsecurity/megalinter@v6.8.0
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           VALIDATE_ALL_CODEBASE: ${{ github.event_name == 'workflow_dispatch' }}

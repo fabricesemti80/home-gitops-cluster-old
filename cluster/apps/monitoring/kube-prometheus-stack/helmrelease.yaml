@@ -27,10 +27,9 @@ spec:
     remediation:
       retries: 5
 
-  #FIXME:
-  # dependsOn:
-  #   - name: ingress-nginx
-  #     namespace: networking
+  dependsOn:
+    - name: ingress-nginx
+      namespace: networking
   #   - name: nfs-client-provisioner
   #     namespace: storage
 
@@ -262,20 +261,19 @@ spec:
               resources:
                 requests:
                   storage: 10Gi
-        #FIXME:
-        # thanos:
-        #   image: quay.io/thanos/thanos:v0.28.0
-        #   # renovate: datasource=docker depName=quay.io/thanos/thanos
-        #   version: "v0.28.0"
-        #   objectStorageConfig:
-        #     name: thanos-objstore
-        #     key: objstore.yml
+        thanos:
+          image: quay.io/thanos/thanos:v0.28.0
+          # renovate: datasource=docker depName=quay.io/thanos/thanos
+          version: "v0.28.0"
+          objectStorageConfig:
+            name: thanos-objstore
+            key: objstore.yml
 
-        # additionalScrapeConfigs:
-        #   - job_name: node-exporter
-        #     scrape_interval: 1m
-        #     scrape_timeout: 10s
-        #     honor_timestamps: true
+        additionalScrapeConfigs:
+          - job_name: node-exporter
+            scrape_interval: 1m
+            scrape_timeout: 10s
+            honor_timestamps: true
         #     static_configs:
         #       - targets:
         #           - "gw01.${SECRET_DOMAIN}:9100"
